@@ -9,14 +9,14 @@ interface Props{
 }
 const GameCard = ({game} : Props) => {
   return (
-    <Card >
+    <Card borderRadius={10} overflow={'hidden'}>
       <Img src={GetCroppedImagedUrl(game.background_image)}/>
       <CardBody>
-        <Text fontSize='2xl' fontWeight={700}>{game.name}</Text>
-        <HStack justifyContent={'space-between'}>
+        <HStack justifyContent={'space-between'} marginBottom={3}>
         <PlatformIconList platforms={game.parent_platforms.map((p)=>p.platform)}></PlatformIconList>
         <CriticScore score={game.metacritic}></CriticScore>
         </HStack>
+        <Text fontSize='2xl' fontWeight={700}>{game.name}</Text>
       </CardBody>
       
     </Card>
