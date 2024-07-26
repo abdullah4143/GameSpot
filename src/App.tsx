@@ -22,34 +22,47 @@ function App() {
  
 
   return (
-    <Grid templateAreas={{
-      lg : `"nav nav" "aside main"`,
-      base : `"nav" "main"`
-    }}>
-      <GridItem area='nav'>
-        < Navbar onSearch={(searchText) => setGameQuery({...gameQuery , searchText})}/>
-        </GridItem>
+    <Grid
+  templateAreas={{
+    lg: `"nav nav" "aside main"`,
+    base: `"nav" "main"`,
+  }}
+  templateColumns={{
+    base: '1fr',
+    lg: '200px 1fr', 
+  }}
+>
+  <GridItem area="nav">
+    <Navbar onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })} />
+  </GridItem>
 
+  <Show above="lg">
+    <GridItem area="aside">
+      <GenreList
+        onSelect={(genre) => setGameQuery({ ...gameQuery, genre })}
+        selectedGenre={gameQuery.genre}
+      />
+    </GridItem>
+  </Show>
 
-      <Show above='lg'>
-        <GridItem area='aside'>
-          <GenreList onSelect={(genre)=> setGameQuery({...gameQuery,genre})} selectedGenre={gameQuery.genre}/>
-        </GridItem>
+  <GridItem area="main" mx="auto" maxWidth="1200px">
+    <Title gameQuery={gameQuery} />
 
+    <Flex marginX={'17px'} gap={2} paddingY={5}>
+      <PlatformSelector
+        onSelect={(platform) => setGameQuery({ ...gameQuery, platform })}
+        selectedPlatform={gameQuery.platform}
+      />
+      <SortSelector
+        onSelectSort={(SortOrder) => setGameQuery({ ...gameQuery, SortOrder })}
+        selectedOrder={gameQuery.SortOrder}
+      />
+    </Flex>
 
-      </Show>
-      <GridItem area='main' >
-        <Title gameQuery={gameQuery}/>
+    <GameGrid gameQuery={gameQuery} />
+  </GridItem>
+</Grid>
 
-        <Flex marginX={'17px'}  gap={2} paddingY={5}>
-          <PlatformSelector onSelect={(platform)=>setGameQuery({...gameQuery,platform})} selectedPlatform={gameQuery.platform} />
-          <SortSelector onSelectSort={(SortOrder) => setGameQuery({...gameQuery , SortOrder})} selectedOrder={gameQuery.SortOrder}/>
-        </Flex>
-        
-        <GameGrid gameQuery={gameQuery}></GameGrid>
-      </GridItem>
-      
-    </Grid>
   )
 }
 
