@@ -13,10 +13,21 @@ export interface Game{
     background_image : string;
     parent_platforms : {platform :Platform} [];
     metacritic : number;
+    rating_top : number;
+    
    
 }
 
 
-const useGame = (gameQuery : GameQuery) => useData<Game>('/games' , {params : {genres: gameQuery.genre?.id , platforms : gameQuery.platform?.id ,ordering : gameQuery.SortOrder}} , [gameQuery])
+const useGame = (gameQuery : GameQuery) => 
+    useData<Game>(
+        '/games' ,
+         {params : 
+            {    genres: gameQuery.genre?.id ,
+                 platforms : gameQuery.platform?.id ,
+                 ordering : gameQuery.SortOrder,
+                 search : gameQuery.searchText
+                }} ,
+         [gameQuery])
  
 export default useGame
